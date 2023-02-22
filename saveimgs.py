@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 def plot_acc_loss(training_metrics, validation_metrics, name):
     colours = ['b','r']
     markers = ['o','v'] 
-    path_to_save = '/data8/projets/Tang_liver_disease_anon_1011913/code/pvianna/code for paper 1/output/'
+    path_to_save = '/output/'
 
     tr_acc = training_metrics[0]
     tr_loss = training_metrics[1]
