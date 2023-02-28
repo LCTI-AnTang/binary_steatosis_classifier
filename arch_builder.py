@@ -9,12 +9,12 @@ from keras.layers import Dropout
 from keras.models import Model
 
 def import_arch(architecture, in_shape, transfer_learning, classes):
-    '''
+    """
     architecture: a string indicating the pre-trained architecture to use.
     in_shape: a tuple representing the input shape of the data.
     transfer_learning: a string indicating the file path of pre-trained weights to use for transfer learning (optional).
     classes: an integer representing the number of output classes.
-    '''
+    """
     
     K.set_image_data_format('channels_last')
     if architecture=='InceptionV3':
