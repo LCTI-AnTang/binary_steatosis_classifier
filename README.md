@@ -28,10 +28,11 @@ To use the software, run main.py
 with the following options:
 - Dataset: csv file with filenames and steatosis scores, and definition if each image is for training or validation.  
 - Architecture: VGG16, InceptionV3 and Resnet50 are implemented in arch_builder.py. Default is VGG16-dropout.  
-- Transfer Learning: 'None' or path to weights file.  
+- Transfer Learning: 'None' or path to a weights file.
 - Input size: One dimension. The model will resize all images to a square shape. Default is 128.  
 - Images directory: path to images directory. All images referenced in the dataset must be in this directory.  
 - Task: Dichotomized steatosis setting. 0 for S0 vs >=S1, 1 for <=S1 vs >=S2, 2 for <=S2 vs S3, 9 for all tasks in sequence.  
+- Mode: 'val' for training and validation, 'test' for testing. Default is 'val'. If 'test', must have a weights file given in 'transfer learning'.
 
 
 ## Contact information
