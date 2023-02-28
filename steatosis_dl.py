@@ -15,6 +15,14 @@ from arch_builder import import_arch
 import saveimgs #custom function
 
 def preprocess_data(X, source):
+    """
+    The function computes the mean and standard deviation of the source data. 
+    It then normalizes the input data X by subtracting the mean and dividing by the standard deviation.
+    This function takes two input arguments:
+    
+    X:  input data that needs to be preprocessed.
+    source: source data used to compute the mean and standard deviation for normalization.
+    """
     mean = source.mean()
     std = source.std()
     X_p = X - mean
@@ -112,22 +120,28 @@ def train_and_val(path_to_set, architecture, tl, n_task, images_dir, resize_shap
         if tl != 'None':
             tl_weights = tl
             
+        # Importing the model with given parameters
         network = import_arch(architecture, in_shape=x_train.shape[1:], transfer_learning=tl_weights, classes=classes)
         print(network.summary())
     
+        # Setting up the output directory and file names for saved models and logs
         saved_model_path = '/output/'
         saved_model_filename = saved_model_path + architecture + '_Task%i' %(task) + '_{epoch:02d}_{val_acc:.4f}.hdf5'
         csv_logger_training = saved_model_path + architecture + '_Task%i' %(task) + '.csv'
         
+        # Setting up the training parameters
         batch_size = 32
         number_of_epochs = 200
         patience = 10 #for early stopping
         if resize_shape == False:
-            batch_size = batch_size//4 #to avoid memory allocation errors
+            batch_size = batch_size//4 #to avoid memory allocation errors when images are too large
             
+        # Defining the callbacks to be used during training
         model_checkpoint = ModelCheckpoint(saved_model_filename, monitor='val_loss', save_best_only=True, verbose=1)
         csv_logger = CSVLogger(csv_logger_training,append = True, separator=';')
         early_stopping = EarlyStopping(monitor='val_loss',patience = patience)
+        
+        # Training and validation
         history = network.fit(X_train, Y_train, batch_size=batch_size, epochs=number_of_epochs, verbose=2,
                             shuffle=True, callbacks= [model_checkpoint, csv_logger, early_stopping], validation_data = (X_val, Y_val))
     
@@ -139,7 +153,7 @@ def train_and_val(path_to_set, architecture, tl, n_task, images_dir, resize_shap
         training_metrics = [tr_acc, tr_loss]
         validation_metrics = [vl_acc, vl_loss]
         name = architecture + '_Task%i' %(task)
-        saveimgs.plot_acc_loss(training_metrics, validation_metrics, name)
+        saveimgs.plot_acc_loss(training_metrics, validation_metrics, name) #custom function to plot loss and accuracy curves
     
         print('Training is complete. Evaluating...')
     
@@ -149,10 +163,11 @@ def train_and_val(path_to_set, architecture, tl, n_task, images_dir, resize_shap
         best_model = sorted(trained_models,key=os.path.getmtime)[-1]
         network.load_weights(best_model)
         
-        #Get validation results
+        # Get validation results
         predictions = network.predict(X_val, verbose=0)
         probs = np.array(predictions)[:,1]
         
+        # Getting ROC curves
         no_skill = [0 for _ in range(len(y_val))] #random guesser ROC
         ns_fpr, ns_tpr, _ = roc_curve(y_val, no_skill)
         fpr, tpr, th = roc_curve(y_val,probs)
@@ -171,12 +186,13 @@ def train_and_val(path_to_set, architecture, tl, n_task, images_dir, resize_shap
         plt.close()
 
         print('Area Under the ROC Curve:', round(model_auc,4))               
-        print('Threshold: Highest Youden index')
+        print('Threshold: Highest Youden index') #difference between the true positive rate (sensitivity) and the false positive rate (1 - specificity)
         J = np.argmax(tpr-fpr)
         ix = th[J]
         y_pred = []
         print('Sensitivity and Specificity from the ROC Curve:', round(tpr[J],4), round(1-fpr[J],4))
 
+        # Assigning binary predictions based on highest Youden index threshold
         for values in range(len(probs)):
             y_pred.append(math.floor(probs[values]) if probs[values]<ix else math.ceil(probs[values]))
                 
@@ -187,7 +203,8 @@ def train_and_val(path_to_set, architecture, tl, n_task, images_dir, resize_shap
         dummy_set['task_labels'] = y_val
         dummy_set = dummy_set.fillna('no_info') #for empty rows
         dummy_set.to_csv(saved_model_path+name+'_Output_set.csv')
-     
+        
+        #Calculating classification metrics and saving them to a csv file
         report = classification_report(y_val,y_pred,target_names=[label0,label1], output_dict=True)
         confmat = confusion_matrix(y_val,y_pred)
     
