@@ -1,3 +1,7 @@
+from sklearn.model_selection import GroupShuffleSplit
+import pandas as pd
+import glob
+
 data_folder = '/path/' 
 path_to_byra = data_folder + 'byra_dataset/'
 images = glob.glob(path_to_byra+'*.jpeg')
@@ -33,6 +37,17 @@ byra_df.loc[row_indexes,'steatosis']= int(1)
 row_indexes = byra_df[byra_df['Fat']<5].index
 byra_df.loc[row_indexes,'steatosis']= int(0)
 
+print('Distribution of Steatosis grades in the data:')
 print(pd.value_counts(byra_df['steatosis'], normalize=True, dropna=False))
 
-byra_df.to_csv(path_to_byra+'byra_dataset.csv')
+train_ids, val_ids = next(GroupShuffleSplit(n_splits=2, test_size=.15).split(byra_df,groups=byra_df['ID']))
+train = byra_df.iloc[train_ids]
+val = byra_df.iloc[val_ids]
+
+train_list = ['train']*len(train)
+val_list = ['val']*len(val)
+train['Subset'] = train_list
+val['Subset'] = val_list
+
+splitset = pd.concat([train,val],axis=0)
+splitset.to_csv(path_to_byra+'byra_dataset.csv')
