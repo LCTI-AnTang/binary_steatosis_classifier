@@ -4,8 +4,8 @@ _Classification of steatosis dichotomized sets (LBUM/CRCHUM - Université de Mon
 
 This code is related to paper XXXXXXXXXXXXXXXXXXX.  
 
-**Note  - To be updated**   
-Next steps: independent test function, CAM, add example dataset/images
+**Note  - To be updated**  
+**Note  - Data available in this repository is from public available sources, used for demonstration purposes.**
 
 ## Introduction
 This project aims to develop a binary classifier for liver steatosis in B-mode ultrasound images using deep learning methods. Liver steatosis is a common sign of non-alcoholic fatty liver disease (NAFLD). Deep learning methods applied to B-mode ultrasound images may be used as an alternative technique for screening liver steatosis.
