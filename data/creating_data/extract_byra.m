@@ -1,5 +1,5 @@
-data = 'I:\Chercheurs\Cloutier_Guy\Individuel\Pedro vianna\Code\dataset_liver_bmodes_steatosis_assessment_IJCARS.mat';
-path = 'I:\Chercheurs\Cloutier_Guy\Individuel\Pedro vianna\Code\byra_dataset\';
+data = '\path\dataset_liver_bmodes_steatosis_assessment_IJCARS.mat';
+path = '\path\byra_dataset\';
 S = load(data);
 dataset = S.data;
 
