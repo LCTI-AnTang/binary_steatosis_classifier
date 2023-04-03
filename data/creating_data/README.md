@@ -1,4 +1,6 @@
 # Example Dataset
+The original dataset used for the paper is protected and is not publicly available. For demonstration purposes, we added an example dataset with associated code. Some changes were made in the dataset creation process when compared to our original work.
+
 ## Data Source
 The dataset used in this example was downloaded from a public data repository from Michal Byra's group at https://zenodo.org/record/1009146#.ZCrhWNtKiUk.
 
