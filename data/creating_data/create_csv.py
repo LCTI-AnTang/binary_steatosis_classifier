@@ -33,6 +33,6 @@ byra_df.loc[row_indexes,'steatosis']= int(1)
 row_indexes = byra_df[byra_df['Fat']<5].index
 byra_df.loc[row_indexes,'steatosis']= int(0)
 
-print(pd.value_counts(byra_df['Steatosis_grade'], normalize=True, dropna=False))
+print(pd.value_counts(byra_df['steatosis'], normalize=True, dropna=False))
 
 byra_df.to_csv(path_to_byra+'byra_dataset.csv')
