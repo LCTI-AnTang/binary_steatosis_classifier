@@ -2,10 +2,15 @@
 
 _Classification of steatosis dichotomized sets (LBUM/CRCHUM - Université de Montréal)_  
 
-This code is related to paper XXXXXXXXXXXXXXXXXXX.  
+This code is related to paper   
+**Comparison of Radiologists and Deep Learning for US Grading of Hepatic Steatosis**  
+_Pedro Vianna, Sara-Ivana Calce, Pamela Boustros, Cassandra Larocque-Rigney, Laurent Patry-Beaudoin, Yi Hui Luo, Emre Aslan, John Marinos, Talal M. Alamri, Kim-Nhien Vu, Jessica Murphy-Lavallée, Jean-Sébastien Billiard, Emmanuel Montagnon, Hongliang Li, Samuel Kadoury, Bich N. Nguyen, Shanel Gauthier, Benjamin Therien, Irina Rish, Eugene Belilovsky, Guy Wolf, Michaël Chassé, Guy Cloutier, and An Tang_  
+Radiology 2023 309:1.  
 
-**Note  - To be updated**  
-**Note  - Data available in this repository is from public available sources, used for demonstration purposes.**
+**Notes  -  
+Data available in this repository is from public available sources.  
+Code is presented for demonstration purposes only.**
+
 
 ## Introduction
 This project aims to develop a binary classifier for liver steatosis in B-mode ultrasound images using deep learning methods. Liver steatosis is a common sign of non-alcoholic fatty liver disease (NAFLD). Deep learning methods applied to B-mode ultrasound images may be used as an alternative technique for screening liver steatosis.
